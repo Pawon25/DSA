@@ -34,4 +34,3 @@ public class Eighteen{
         System.out.println(isPalindrome(s1));
     }
 }
-
