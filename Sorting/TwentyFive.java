@@ -36,11 +36,37 @@ public class TwentyFive{
         }
         return arr;
     }
-    
+
+    public static int[] dec(int[] arr){
+        Arrays.sort(arr);
+        for(int i=0;i<arr.length/2; i++){
+            int temp = arr[i];
+            arr[i] = arr[arr.length - 1 -i];
+            arr[arr.length - 1 -i] = temp;
+        }
+        System.out.println("\nAfter desc"+ "==\n");
+        for(int i=0;i<arr.length; i++){
+            System.out.print(arr[i]+" ");
+        }
+        return arr;
+    }
+
+    public static boolean checkPermuteValid(int[] a, int[]b, int k){
+        for(int i=0;i<a.length;i++){
+            if(a[i]+b[i] != k){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args){
-        int[] a = {2, 1, 3};
-        int[] b = {7, 8, 9};
+        int[] a = {1, 2, 2, 1};
+        int[] b = { 3, 3, 3, 4 };
+        int k = 5;
         asc(a);
-        System.out.println();
+        dec(b);
+        //So i need to check where all permutations is greater than k;
+        System.out.println("Result "+ (checkPermuteValid(a,b,k)? "Yes": "No"));
     }
 }
