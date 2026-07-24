@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA &amp; Interview Crash Course — ASE Prep</title>
+<style>
+:root{
+  --bg:#F3F4F7;
+  --surface:#FFFFFF;
+  --surface-2:#EBEDF2;
+  --ink:#1A1D23;
+  --ink-soft:#5B6472;
+  --border:#DCDFE6;
+  --accent:#2C5FD9;
+  --accent-ink:#12306E;
+  --accent-soft:#E7ECFB;
+  --good:#187A4E;
+  --good-soft:#E4F5EC;
+  --warn:#A6480A;
+  --warn-soft:#FBEAD9;
+  --code-bg:#F0F1F5;
+  --font-body: -apple-system, "Segoe UI", ui-sans-serif, system-ui, Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Consolas", "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#15171C;
+    --surface:#1D2027;
+    --surface-2:#262A33;
+    --ink:#E7E9ED;
+    --ink-soft:#9AA3B2;
+    --border:#343841;
+    --accent:#7C9CFF;
+    --accent-ink:#D6E0FF;
+    --accent-soft:#232B45;
+    --good:#49C98A;
+    --good-soft:#16281F;
+    --warn:#F0A868;
+    --warn-soft:#2E2013;
+    --code-bg:#181A20;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171C; --surface:#1D2027; --surface-2:#262A33; --ink:#E7E9ED; --ink-soft:#9AA3B2;
+  --border:#343841; --accent:#7C9CFF; --accent-ink:#D6E0FF; --accent-soft:#232B45;
+  --good:#49C98A; --good-soft:#16281F; --warn:#F0A868; --warn-soft:#2E2013; --code-bg:#181A20;
+}
+:root[data-theme="light"]{
+  --bg:#F3F4F7; --surface:#FFFFFF; --surface-2:#EBEDF2; --ink:#1A1D23; --ink-soft:#5B6472;
+  --border:#DCDFE6; --accent:#2C5FD9; --accent-ink:#12306E; --accent-soft:#E7ECFB;
+  --good:#187A4E; --good-soft:#E4F5EC; --warn:#A6480A; --warn-soft:#FBEAD9; --code-bg:#F0F1F5;
+}
+*{box-sizing:border-box;}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--font-body);
+  margin:0; line-height:1.55; font-size:16px;
+}
+.page{ display:grid; grid-template-columns:250px 1fr; max-width:1180px; margin:0 auto; gap:0; }
+.toc{
+  position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+  padding:28px 18px 28px 24px; border-right:1px solid var(--border);
+}
+.toc-title{ font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin:0 0 14px; }
+.toc a{
+  display:block; color:var(--ink-soft); text-decoration:none; font-size:.88rem;
+  padding:6px 10px; border-radius:6px; margin-bottom:2px; border-left:2px solid transparent;
+}
+.toc a:hover{ color:var(--ink); background:var(--surface-2); }
+.toc a.active{ color:var(--accent-ink); background:var(--accent-soft); border-left:2px solid var(--accent); font-weight:600; }
+.toc .grp{ margin-top:16px; }
+
+main{ padding:36px 44px 100px; min-width:0; }
+header.hero{ margin-bottom:36px; }
+header.hero h1{
+  font-size:2rem; margin:0 0 8px; text-wrap:balance; letter-spacing:-.01em;
+}
+header.hero p{ color:var(--ink-soft); margin:0; max-width:62ch; }
+.badge-row{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+.badge{
+  font-size:.75rem; font-weight:600; padding:4px 10px; border-radius:20px;
+  background:var(--surface-2); color:var(--ink-soft); border:1px solid var(--border);
+}
+
+section{ margin-bottom:52px; scroll-margin-top:20px; }
+section h2{
+  font-size:1.4rem; margin:0 0 6px; padding-bottom:10px; border-bottom:2px solid var(--border);
+}
+section > .sec-sub{ color:var(--ink-soft); font-size:.92rem; margin:0 0 20px; }
+
+.card{
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:20px 22px; margin-bottom:18px;
+}
+.card h3{ margin:0 0 8px; font-size:1.08rem; }
+.card .intuition{ margin:0 0 14px; }
+.card .intuition b{ color:var(--accent-ink); }
+
+pre{
+  background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+  padding:12px 14px; overflow-x:auto; margin:0 0 14px; font-size:.85rem;
+}
+code{ font-family:var(--font-mono); }
+p code, li code{ background:var(--code-bg); padding:1px 5px; border-radius:4px; font-size:.88em; border:1px solid var(--border); }
+
+.qlist{ margin:0 0 14px; padding-left:1.2em; }
+.qlist li{ margin-bottom:5px; }
+.qlist-label{ font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin:0 0 6px; font-weight:700; }
+
+.callout{ border-left:3px solid var(--warn); background:var(--warn-soft); padding:10px 14px; border-radius:0 6px 6px 0; font-size:.9rem; margin:0 0 6px;}
+.callout b{ color:var(--warn); }
+.callout.good{ border-left-color:var(--good); background:var(--good-soft); }
+.callout.good b{ color:var(--good); }
+
+table{ width:100%; border-collapse:collapse; font-size:.88rem; }
+th,td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); }
+th{ color:var(--ink-soft); font-weight:600; font-size:.78rem; text-transform:uppercase; letter-spacing:.04em; }
+td code{ font-variant-numeric:tabular-nums; }
+.table-wrap{ overflow-x:auto; margin-bottom:14px; }
+
+.qa{ border-top:1px dashed var(--border); padding-top:12px; margin-top:12px; }
+.qa .q{ font-weight:600; margin:0 0 6px; }
+.qa .q::before{ content:"Q: "; color:var(--accent); }
+.qa .a{ margin:0; color:var(--ink-soft); }
+
+.mobile-toc{ display:none; }
+
+@media (max-width: 880px){
+  .page{ grid-template-columns:1fr; }
+  .toc{ display:none; }
+  .mobile-toc{ display:block; position:sticky; top:0; z-index:5; background:var(--surface); border-bottom:1px solid var(--border); padding:10px 16px; }
+  .mobile-toc summary{ cursor:pointer; font-weight:600; font-size:.9rem; }
+  .mobile-toc-links{ display:flex; flex-direction:column; gap:2px; padding-top:10px; max-height:50vh; overflow-y:auto; }
+  .mobile-toc-links a{ color:var(--ink-soft); text-decoration:none; font-size:.88rem; padding:6px 4px; }
+  main{ padding:24px 20px 80px; }
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-toc">
+  <details>
+    <summary>Jump to section ▾</summary>
+    <div class="mobile-toc-links">
+      <a href="#syntax">Java Syntax &amp; Collections</a>
+      <a href="#complexity">Complexity Cheat Sheet</a>
+      <a href="#two-pointers">Two Pointers</a>
+      <a href="#sliding-window">Sliding Window</a>
+      <a href="#hashing">Hashing</a>
+      <a href="#kadane">Kadane's / DP Intro</a>
+      <a href="#linkedlist">Linked List</a>
+      <a href="#recursion">Recursion &amp; Backtracking</a>
+      <a href="#sorting">Sorting</a>
+      <a href="#stacks">Stacks &amp; Queues</a>
+      <a href="#trees">Trees</a>
+      <a href="#oop">OOP Concepts</a>
+      <a href="#dbms">DBMS / SQL</a>
+      <a href="#resume">Resume Deep-Dive Q&amp;A</a>
+      <a href="#behavioral">Behavioral</a>
+    </div>
+  </details>
+</div>
+
+<div class="page">
+  <nav class="toc">
+    <p class="toc-title">Foundations</p>
+    <a href="#syntax">Java Syntax &amp; Collections</a>
+    <a href="#complexity">Complexity Cheat Sheet</a>
+    <p class="toc-title grp">Patterns</p>
+    <a href="#two-pointers">Two Pointers</a>
+    <a href="#sliding-window">Sliding Window</a>
+    <a href="#hashing">Hashing</a>
+    <a href="#kadane">Kadane's / DP Intro</a>
+    <a href="#linkedlist">Linked List</a>
+    <a href="#recursion">Recursion &amp; Backtracking</a>
+    <a href="#sorting">Sorting</a>
+    <a href="#stacks">Stacks &amp; Queues</a>
+    <a href="#trees">Trees</a>
+    <p class="toc-title grp">CS Fundamentals</p>
+    <a href="#oop">OOP Concepts</a>
+    <a href="#dbms">DBMS / SQL</a>
+    <p class="toc-title grp">You, Specifically</p>
+    <a href="#resume">Resume Deep-Dive Q&amp;A</a>
+    <a href="#behavioral">Behavioral</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <h1>DSA &amp; Interview Crash Course</h1>
+      <p>Built for your ASE interview — Java-first syntax, pattern intuition, the questions most likely to come up, and a section built directly from your resume (Texas AI, cosine ranking, BERT finetuning, FastAPI, AWS).</p>
+      <div class="badge-row">
+        <span class="badge">Java / Python</span>
+        <span class="badge">FastAPI + ML</span>
+        <span class="badge">7-8 LPA ASE</span>
+      </div>
+    </header>
+
+    <section id="syntax">
+      <h2>Java Syntax &amp; Collections</h2>
+      <p class="sec-sub">The exact gotchas that bite under interview pressure — several of these came up in your own code today.</p>
+
+      <div class="card">
+        <h3>ArrayList&lt;T&gt;</h3>
+        <pre><code>List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+list.add(5);            // add element
+list.get(0);             // read by index — O(1)
+list.set(0, 9);           // overwrite by index
+list.size();
+list.remove(Integer.valueOf(5));  // removes the VALUE 5
+list.remove(0);                    // removes the element AT index 0</code></pre>
+        <div class="callout"><b>Gotcha:</b> <code>list.remove(int)</code> removes by <b>index</b>, but <code>list.remove(Integer.valueOf(x))</code> removes by <b>value</b>. Mixing these up is one of the most common silent bugs in Java collections interviews — you hit almost the exact same trap today with <code>Set&lt;Character&gt;.remove(int)</code> autoboxing to <code>Integer</code> instead of matching a <code>char</code>.</div>
+      </div>
+
+      <div class="card">
+        <h3>HashMap&lt;K,V&gt; / HashSet&lt;T&gt;</h3>
+        <pre><code>Map&lt;Character, Integer&gt; freq = new HashMap&lt;&gt;();
+freq.put('a', 1);
+freq.get('a');                       // null if absent
+freq.getOrDefault('a', 0);           // safe default
+freq.containsKey('a');
+freq.merge('a', 1, Integer::sum);    // increment-or-insert in one line
+
+Set&lt;Character&gt; seen = new HashSet&lt;&gt;();
+seen.add('a'); seen.contains('a'); seen.remove('a');</code></pre>
+        <div class="callout good"><b>Intuition:</b> reach for <code>HashMap</code>/<code>HashSet</code> the instant a problem needs "have I seen this before?" or "count of X" in O(1) — this replaces an O(n) inner loop with an O(1) lookup, which is usually the difference between a brute-force and an accepted solution.</div>
+      </div>
+
+      <div class="card">
+        <h3>Strings &amp; StringBuilder</h3>
+        <pre><code>String s = "hello";
+s.charAt(0); s.length(); s.substring(1, 3); s.toCharArray();
+// Strings are IMMUTABLE — every concatenation in a loop creates a new object
+StringBuilder sb = new StringBuilder();
+sb.append('a').append("bc");
+sb.reverse();
+sb.toString();</code></pre>
+        <div class="callout"><b>Gotcha:</b> building a string with <code>+=</code> inside a loop is O(n²) overall because each <code>+=</code> copies the whole string. Use <code>StringBuilder</code> for anything built incrementally.</div>
+      </div>
+
+      <div class="card">
+        <h3>Arrays &amp; Math</h3>
+        <pre><code>int[] arr = new int[5];
+int[][] grid = new int[rows][cols];
+Arrays.sort(arr);
+Arrays.toString(arr);
+Math.max(a, b); Math.min(a, b); Math.abs(a);   // lowercase — Math.MAX does not compile</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>static vs instance</h3>
+        <p class="intuition">Since <code>public static void main</code> is <b>static</b>, it can only call other <b>static</b> methods directly (no object needed). To call a non-static (instance) method, you first need <code>new ClassName().method()</code>. In DSA practice files this is why almost every helper method ends up <code>static</code>.</p>
+      </div>
+    </section>
+
+    <section id="complexity">
+      <h2>Complexity Cheat Sheet</h2>
+      <p class="sec-sub">Know these cold — you will be asked "what's the time complexity of that?" after every solution.</p>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Structure</th><th>Access</th><th>Search</th><th>Insert</th><th>Delete</th></tr>
+          <tr><td>ArrayList</td><td><code>O(1)</code></td><td><code>O(n)</code></td><td><code>O(1)</code> at end</td><td><code>O(n)</code></td></tr>
+          <tr><td>LinkedList</td><td><code>O(n)</code></td><td><code>O(n)</code></td><td><code>O(1)</code> at known node</td><td><code>O(1)</code> at known node</td></tr>
+          <tr><td>HashMap/HashSet</td><td>—</td><td><code>O(1)</code> avg</td><td><code>O(1)</code> avg</td><td><code>O(1)</code> avg</td></tr>
+          <tr><td>TreeMap (Red-Black tree)</td><td>—</td><td><code>O(log n)</code></td><td><code>O(log n)</code></td><td><code>O(log n)</code></td></tr>
+          <tr><td>Sorting (Merge/Quick)</td><td colspan="3">—</td><td><code>O(n log n)</code> avg</td></tr>
+        </table>
+      </div>
+      <div class="callout good"><b>How to reason live:</b> count nested loops for a rough estimate, then check if any hidden work (like <code>contains()</code> on a List, or string concatenation) secretly turns an "O(n)" line into O(n) or O(n²) per call.</div>
+    </section>
+
+    <section id="two-pointers">
+      <h2>Two Pointers</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> when the array is sorted, or you're looking for a pair/triplet meeting some condition, move two indices toward each other (or both forward) instead of nesting loops. Each pointer moves at most n times total, so it collapses an O(n²) brute force into O(n).</p>
+        <pre><code>int left = 0, right = arr.length - 1;
+while (left &lt; right) {
+    int sum = arr[left] + arr[right];
+    if (sum == target) { /* found */ break; }
+    else if (sum &lt; target) left++;
+    else right--;
+}</code></pre>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Two Sum (sorted array)</li>
+          <li>Container With Most Water</li>
+          <li>Valid Palindrome</li>
+          <li>Remove Duplicates from Sorted Array (in-place)</li>
+          <li>3Sum (sort + fix one, two-pointer the rest)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="sliding-window">
+      <h2>Sliding Window</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> maintain a window <code>[left, right]</code>, expand <code>right</code> to grow it, shrink from <code>left</code> when a constraint is violated. You just built this live for Longest Substring Without Repeating Characters — the core discipline is keeping your auxiliary structure (Set/Map) in sync with exactly what's inside <code>[left, right]</code>.</p>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Longest Substring Without Repeating Characters ✅ (you solved this today)</li>
+          <li>Maximum Sum Subarray of Size K</li>
+          <li>Minimum Window Substring</li>
+          <li>Longest Substring with At Most K Distinct Characters</li>
+        </ul>
+        <div class="callout"><b>Gotcha you hit live:</b> forgetting to remove the evicted character from your tracking Set when shrinking the window — it silently keeps counting characters that are no longer in range.</div>
+      </div>
+    </section>
+
+    <section id="hashing">
+      <h2>Hashing</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> trade memory for speed — a HashMap/HashSet turns "have I seen this value / how many times" into O(1). Default to this whenever brute force means an inner loop scanning for a match.</p>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Two Sum (unsorted array)</li>
+          <li>Group Anagrams (map sorted-string → list)</li>
+          <li>First Non-Repeating Character in a String</li>
+          <li>Longest Consecutive Sequence</li>
+          <li>Subarray Sum Equals K (prefix sum + HashMap)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="kadane">
+      <h2>Kadane's Algorithm / DP Intro</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> at every index, decide "extend the running subarray, or restart here?" — that's <code>currentSum = max(arr[i], currentSum + arr[i])</code>. Track the best answer seen so far separately in <code>maxSum</code>. This is the simplest possible dynamic programming: today's decision only depends on yesterday's running result.</p>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Maximum Subarray Sum ✅ (you solved this today)</li>
+          <li>Maximum Product Subarray (track both running max <em>and</em> min — negatives flip the sign)</li>
+          <li>Best Time to Buy and Sell Stock (track min price seen so far, max profit so far)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="linkedlist">
+      <h2>Linked List</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> almost every LinkedList problem is pointer bookkeeping — draw three boxes (<code>prev</code>, <code>curr</code>, <code>next</code>) on paper before writing code. For cycle/middle problems, use a slow pointer (1 step) and fast pointer (2 steps): if there's a cycle, fast laps slow and they meet.</p>
+        <pre><code>// Iterative reversal
+ListNode prev = null, curr = head;
+while (curr != null) {
+    ListNode next = curr.next;  // save before overwriting
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+}
+return prev; // new head</code></pre>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Reverse a Linked List (iterative + recursive)</li>
+          <li>Detect Cycle (Floyd's slow/fast pointer)</li>
+          <li>Find the Middle Node</li>
+          <li>Merge Two Sorted Lists</li>
+          <li>Remove Nth Node From End (two pointers, gap of n)</li>
+        </ul>
+        <div class="callout"><b>Gotcha:</b> always save <code>curr.next</code> before you overwrite it, and always null-check before dereferencing — <code>NullPointerException</code> on <code>.next.next</code> is the #1 LinkedList interview slip.</div>
+      </div>
+    </section>
+
+    <section id="recursion">
+      <h2>Recursion &amp; Backtracking</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> write the base case first, then trust the recursive call to correctly solve the smaller subproblem (the "leap of faith") — don't try to mentally unroll the whole call stack. Backtracking is recursion plus undo: <em>choose</em> an option, <em>recurse</em>, then <em>un-choose</em> it before trying the next option.</p>
+        <pre><code>void backtrack(List&lt;Integer&gt; path, int start, int[] nums) {
+    result.add(new ArrayList&lt;&gt;(path));      // record current state
+    for (int i = start; i &lt; nums.length; i++) {
+        path.add(nums[i]);                    // choose
+        backtrack(path, i + 1, nums);          // explore
+        path.remove(path.size() - 1);          // un-choose
+    }
+}</code></pre>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Subsets / Power Set</li>
+          <li>Permutations</li>
+          <li>Combination Sum ✅ (in your repo already)</li>
+          <li>Generate Parentheses</li>
+          <li>N-Queens (harder, but a common "if time permits" follow-up)</li>
+        </ul>
+        <div class="callout"><b>Gotcha:</b> forgetting the "un-choose" step means state leaks across branches and later results silently include earlier choices.</div>
+      </div>
+    </section>
+
+    <section id="sorting">
+      <h2>Sorting</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> Merge Sort splits, sorts each half, then merges (stable, always O(n log n), needs O(n) extra space). Quick Sort picks a pivot, partitions everything smaller to its left and larger to its right, then recurses on each side (in-place, O(n log n) average, O(n²) worst case if pivots are always the smallest/largest element).</p>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Implement Merge Sort / Quick Sort from scratch (know both — you already have these in your repo)</li>
+          <li>"Why is Quick Sort worst-case O(n²)?" (bad pivot choice on already-sorted input)</li>
+          <li>Sort Colors (Dutch National Flag, one-pass 3-way partition)</li>
+          <li>Kth Largest Element (heap or quickselect)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="stacks">
+      <h2>Stacks &amp; Queues</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> reach for a <b>stack</b> whenever a problem is about "matching," "nesting," or "the most recent unresolved thing" (LIFO). Reach for a <b>queue</b> when order must be preserved (FIFO) — e.g. BFS, or processing requests in arrival order.</p>
+        <pre><code>Deque&lt;Character&gt; stack = new ArrayDeque&lt;&gt;();
+stack.push('('); stack.peek(); stack.pop(); stack.isEmpty();</code></pre>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Valid Parentheses</li>
+          <li>Min Stack (O(1) min retrieval)</li>
+          <li>Next Greater Element (monotonic stack)</li>
+          <li>Implement a Queue using Two Stacks</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="trees">
+      <h2>Trees</h2>
+      <div class="card">
+        <p class="intuition"><b>Intuition:</b> most tree problems are naturally recursive — "solve for the left subtree, solve for the right subtree, combine the results at the current node." Know the three DFS traversal orders and one BFS (level order).</p>
+        <pre><code>void inorder(Node n){ if(n==null) return; inorder(n.left); visit(n); inorder(n.right); }
+void preorder(Node n){ if(n==null) return; visit(n); preorder(n.left); preorder(n.right); }
+void postorder(Node n){ if(n==null) return; postorder(n.left); postorder(n.right); visit(n); }</code></pre>
+        <p class="qlist-label">Commonly asked</p>
+        <ul class="qlist">
+          <li>Inorder / Preorder / Postorder traversal (recursive and iterative-with-a-stack)</li>
+          <li>Level Order Traversal (BFS using a Queue)</li>
+          <li>Height / Max Depth of a Binary Tree</li>
+          <li>Check if a Binary Tree is Balanced</li>
+          <li>Search/Insert in a Binary Search Tree — <code>O(log n)</code> average, <code>O(n)</code> worst if skewed</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="oop">
+      <h2>OOP Concepts (Java)</h2>
+      <div class="card">
+        <div class="qa">
+          <p class="q">What are the four pillars of OOP?</p>
+          <p class="a"><b>Encapsulation</b> (bundle data + methods, hide internals via private fields/getters), <b>Inheritance</b> (a class reuses/extends another's behavior), <b>Polymorphism</b> (one interface, many implementations), <b>Abstraction</b> (expose what an object does, hide how).</p>
+        </div>
+        <div class="qa">
+          <p class="q">Overloading vs Overriding?</p>
+          <p class="a"><b>Overloading</b> = same method name, different parameters, resolved at <b>compile time</b>. <b>Overriding</b> = subclass redefines a parent's method with the same signature, resolved at <b>runtime</b> (dynamic dispatch).</p>
+        </div>
+        <div class="qa">
+          <p class="q">Abstract class vs Interface?</p>
+          <p class="a">Abstract class can hold state (fields) and partial implementation; a class can extend only one. Interface is a pure contract (Java 8+ allows default methods); a class can implement many interfaces. Use an interface for "can-do" capabilities, abstract class for shared state/behavior across closely related classes.</p>
+        </div>
+        <div class="qa">
+          <p class="q">Can you override a static method?</p>
+          <p class="a">No — static methods are resolved at compile time based on the reference type ("method hiding," not overriding).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="dbms">
+      <h2>DBMS / SQL</h2>
+      <div class="card">
+        <div class="qa">
+          <p class="q">Types of SQL joins?</p>
+          <p class="a"><b>INNER JOIN</b> — only matching rows in both tables. <b>LEFT JOIN</b> — all rows from the left, matched rows from the right (nulls if none). <b>RIGHT JOIN</b> — mirror of left. <b>FULL OUTER JOIN</b> — all rows from both, matched where possible.</p>
+        </div>
+        <div class="qa">
+          <p class="q">What does an index actually do?</p>
+          <p class="a">Speeds up reads (typically a B-tree) by avoiding a full table scan, at the cost of slightly slower writes (the index itself must be updated) and extra storage.</p>
+        </div>
+        <div class="qa">
+          <p class="q">ACID properties?</p>
+          <p class="a"><b>Atomicity</b> (all-or-nothing), <b>Consistency</b> (valid state to valid state), <b>Isolation</b> (concurrent transactions don't interfere), <b>Durability</b> (once committed, survives a crash).</p>
+        </div>
+        <div class="qa">
+          <p class="q">When would you pick MongoDB/Firestore over MySQL? (directly relevant to your resume)</p>
+          <p class="a">NoSQL when the schema is flexible/evolving, data is naturally document-shaped (JSON-like), or you need easy horizontal scaling. Relational (MySQL) when you need multi-row transactional integrity, complex joins, or strict schema enforcement. Be ready to justify which you used where and why, for both Texas AI and your LMS project.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <h2>Resume Deep-Dive Q&amp;A</h2>
+      <p class="sec-sub">Predicted questions straight off your resume bullets, with a talking-point structure for each — don't memorize word-for-word, know the reasoning well enough to handle a follow-up.</p>
+
+      <div class="card">
+        <h3>Cosine ranking algorithm for candidate scoring</h3>
+        <div class="qa">
+          <p class="q">Walk me through how cosine similarity works and why you used it here.</p>
+          <p class="a">Represent both resume and job description as vectors (TF-IDF or embeddings). Cosine similarity = <code>dot(A,B) / (‖A‖·‖B‖)</code> — it measures the <em>angle</em> between vectors, not magnitude, so a short resume and a long one can still score fairly on content overlap alone. Range is -1 to 1 (0 to 1 for non-negative vectors like TF-IDF).</p>
+        </div>
+        <div class="qa">
+          <p class="q">Why not Euclidean distance instead?</p>
+          <p class="a">Euclidean distance is sensitive to vector length/magnitude — a resume with more words would be penalized purely for being longer, even with identical relevant content. Cosine similarity normalizes that away.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Finetuned BERT for resume parsing</h3>
+        <div class="qa">
+          <p class="q">What does "finetuning BERT" actually involve, and why not use it out of the box?</p>
+          <p class="a">Pretrained BERT has general language understanding from large-scale unsupervised training. Finetuning adds a task-specific head (e.g. token classification/NER for skills, titles, dates) and continues training on your labeled resume data, typically with a small learning rate and few epochs to avoid "catastrophic forgetting" of the pretrained knowledge. Out-of-the-box BERT doesn't know your specific extraction schema.</p>
+        </div>
+        <div class="qa">
+          <p class="q">How did you evaluate the parser's quality?</p>
+          <p class="a">Have a concrete answer ready — precision/recall/F1 on a held-out labeled set is the expected framing if you measured it; if you didn't formally measure it, be honest and explain what you'd add.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>FastAPI</h3>
+        <div class="qa">
+          <p class="q">Why FastAPI over Flask or Django?</p>
+          <p class="a">Native async support (good for I/O-bound ML inference calls), automatic request validation + serialization via Pydantic, and auto-generated OpenAPI/Swagger docs with less boilerplate than Flask.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>AWS (EC2, S3)</h3>
+        <div class="qa">
+          <p class="q">What's the difference between EC2 and S3, and how did you use them?</p>
+          <p class="a">EC2 = virtual compute instances (where your app/model actually runs). S3 = object storage (files, model artifacts, static assets) — not a filesystem, accessed via API. Be ready to describe your actual deployment flow end to end.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>RabbitMQ</h3>
+        <div class="qa">
+          <p class="q">What problem does a message queue solve?</p>
+          <p class="a">Decouples producer and consumer so they don't need to be online/fast at the same time — useful for async/long-running work (like ML inference) without blocking the request thread, plus built-in retry/buffering under load.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>React (front-end)</h3>
+        <div class="qa">
+          <p class="q">What's the Virtual DOM and why does it help performance?</p>
+          <p class="a">React keeps an in-memory representation of the UI, diffs it against the previous version on state change, and only patches the real DOM where it actually changed — avoiding expensive full re-renders.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>NeuroSpectra (SVM, 99.98% accuracy)</h3>
+        <div class="qa">
+          <p class="q">99.98% accuracy is unusually high — how do you know the model isn't overfitting?</p>
+          <p class="a">Expect this question — interviewers probe suspiciously high numbers. Have specifics ready: train/test split or k-fold cross-validation methodology, dataset size, and why SVM's margin-based decision boundary generalized well here vs. Random Forest/Logistic Regression on the <em>same</em> split. If the dataset was small, say so honestly and note that as a limitation.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Video conferencing app (Agora-RTC)</h3>
+        <div class="qa">
+          <p class="q">How does real-time video actually get from one user to another?</p>
+          <p class="a">WebRTC-based peer connections (Agora manages the signaling + media routing/SFU layer) — you don't need deep protocol internals, but be able to explain: signaling to establish a connection, then peer-to-peer (or via a media server) audio/video streaming, plus what Agora specifically handled for you vs. what you built (chat, screen share, anonymous sign-in).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="behavioral">
+      <h2>Behavioral — Quick Hits</h2>
+      <div class="card">
+        <div class="qa">
+          <p class="q">Tell me about yourself.</p>
+          <p class="a">Structure: current role at Texas AI (what you build, day to day) → one concrete achievement (the ATS cosine-ranking/BERT work) → why you're looking at this next opportunity. Keep it under 90 seconds.</p>
+        </div>
+        <div class="qa">
+          <p class="q">Describe a challenge you faced and how you solved it.</p>
+          <p class="a">Good candidates from your resume: tuning the resume-parser/BERT pipeline, choosing among 4 classification algorithms for NeuroSpectra and justifying SVM, or the Mongo 16MB-document migration (normalizing coupled nested arrays out into their own collection). Structure as Situation → Task → Action → Result.</p>
+        </div>
+        <div class="qa">
+          <p class="q">Why this company / this role?</p>
+          <p class="a">Have one specific, genuine reason ready — vague answers ("great culture") read poorly at this level.</p>
+        </div>
+        <div class="qa">
+          <p class="q">Strengths / weaknesses?</p>
+          <p class="a">Pick a real weakness with a concrete corrective action you're already taking — not a disguised strength ("I work too hard").</p>
+        </div>
+      </div>
+    </section>
+
+    <p style="color:var(--ink-soft); font-size:.85rem; text-align:center; margin-top:60px;">You've got this.</p>
+  </main>
+</div>
+
+<script>
+(function(){
+  var links = document.querySelectorAll('.toc a');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section'));
+  if (!links.length || !sections.length) return;
+  var byId = {};
+  links.forEach(function(a){ byId[a.getAttribute('href').slice(1)] = a; });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var link = byId[entry.target.id];
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(function(l){ l.classList.remove('active'); });
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -70% 0px' });
+  sections.forEach(function(s){ obs.observe(s); });
+})();
+</script>
+</body>
+</html>
