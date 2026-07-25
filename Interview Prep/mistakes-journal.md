@@ -9,11 +9,13 @@ Boxes: **1** = review next day · **2** = review in 3 days · **3** = review in 
 ### coin-change-combinations
 - **What happened:** Given N and unlimited 1/2 rupee coins, tried to brute-force with buggy nested loops (`i>0; i++` never terminates) instead of recognizing the unbounded-knapsack-combinations pattern.
 - **Fix:** `dp[0]=1; for coin in coins: for a in coin..N: dp[a]+=dp[a-coin]` — coin loop OUTSIDE, amount loop INSIDE gives combinations (not permutations).
-- **Box:** 1 · **Next review:** 2026-07-25
+- **Box:** 1 · **Next review:** 2026-07-26
+- **2026-07-25 review:** Solved `n,{1,2}` case with an ad-hoc parity-counting loop; had an off-by-one (loop excluded `i=0`, the all-2s case), fixed after a nudge. Didn't get to the general `dp[]` tabulation version — deferred to tomorrow. Staying in box 1 since the core pattern (not just this coin pair) isn't solid yet.
 
 ### abstraction-vs-encapsulation
 - **What happened:** Fumbled a clean live explanation of abstraction vs encapsulation.
 - **Fix:** "Abstraction hides complexity (what), encapsulation hides data (how)." Abstraction = interface design (abstract class/interface). Encapsulation = access control (private fields + public methods). Car analogy: driving pedals = abstraction, sealed engine internals = encapsulation.
-- **Box:** 1 · **Next review:** 2026-07-25
+- **Box:** 2 · **Next review:** 2026-07-28
+- **2026-07-25 review:** First pass was thin (two flat definitions, no distinguishing hook). Recited the corrected version cleanly on second pass. Promoted to box 2.
 
 <!-- Add new entries below in the same format as you find new gaps. -->

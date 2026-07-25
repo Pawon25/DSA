@@ -1,1 +1,2 @@
 date,problem,pattern,difficulty,time_min,time_budget_min,result,mistake_tag,notes
+2026-07-25,Coin Change 2 (coins {1,2}),unbounded-knapsack-combinations,Medium,15,20,hint,coin-change-combinations,"Ad-hoc parity-counting approach; had an off-by-one loop bound (excluded the all-2s case), fixed after a nudge. General dp[] tabulation version deferred to tomorrow."

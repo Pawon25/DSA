@@ -1,1 +1,2 @@
 date,topic,recall_quality,notes
+2026-07-25,abstraction-vs-encapsulation,shaky,"First pass gave two flat definitions without a distinguishing hook; recited the corrected crisp version (design vs implementation, car analogy) cleanly on second pass."
