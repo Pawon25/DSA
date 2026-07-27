@@ -1,2 +1,3 @@
 date,topic,recall_quality,notes
 2026-07-25,abstraction-vs-encapsulation,shaky,"First pass gave two flat definitions without a distinguishing hook; recited the corrected crisp version (design vs implementation, car analogy) cleanly on second pass."
+2026-07-28,abstraction-vs-encapsulation,shaky,"One-liner and encapsulation half were solid on first pass, but abstraction example conflated abstraction with inheritance (parent class implementation reused by child). Corrected with the list.sort()/interface example - no inheritance needed for abstraction. Clean restatement ('interface hides the how, caller just uses it') on second pass."

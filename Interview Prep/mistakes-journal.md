@@ -15,8 +15,9 @@ Boxes: **1** = review next day · **2** = review in 3 days · **3** = review in 
 ### abstraction-vs-encapsulation
 - **What happened:** Fumbled a clean live explanation of abstraction vs encapsulation.
 - **Fix:** "Abstraction hides complexity (what), encapsulation hides data (how)." Abstraction = interface design (abstract class/interface). Encapsulation = access control (private fields + public methods). Car analogy: driving pedals = abstraction, sealed engine internals = encapsulation.
-- **Box:** 2 · **Next review:** 2026-07-28
+- **Box:** 2 · **Next review:** 2026-07-31
 - **2026-07-25 review:** First pass was thin (two flat definitions, no distinguishing hook). Recited the corrected version cleanly on second pass. Promoted to box 2.
+- **2026-07-28 review:** One-liner and encapsulation half solid immediately, but the abstraction example conflated abstraction with inheritance (described parent-class-implementation reuse rather than a pure interface/caller relationship). Corrected with `list.sort()` — abstraction needs no inheritance at all. Clean restatement on second pass ("interface hides the how, caller just uses it"). Staying in box 2 (not promoting) since a genuine conceptual conflation surfaced, not just a thin definition.
 
 ### off-by-one-array-loop-bounds
 - **What happened (2026-07-27, Climbing Stairs):** In the bottom-up tabulation version, sized the array `new int[n]` (valid indices `0..n-1`) but then read `dp[n]`. Separately, the fill loop used `i < n-1` as the stop condition, so the last index(es) never got computed before being read. This is the second session in a row with an array/loop boundary bug (Coin Change 2 on 2026-07-25 also had one) — recurring pattern, not a one-off.
