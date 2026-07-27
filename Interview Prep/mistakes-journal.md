@@ -18,4 +18,10 @@ Boxes: **1** = review next day · **2** = review in 3 days · **3** = review in 
 - **Box:** 2 · **Next review:** 2026-07-28
 - **2026-07-25 review:** First pass was thin (two flat definitions, no distinguishing hook). Recited the corrected version cleanly on second pass. Promoted to box 2.
 
+### off-by-one-array-loop-bounds
+- **What happened (2026-07-27, Climbing Stairs):** In the bottom-up tabulation version, sized the array `new int[n]` (valid indices `0..n-1`) but then read `dp[n]`. Separately, the fill loop used `i < n-1` as the stop condition, so the last index(es) never got computed before being read. This is the second session in a row with an array/loop boundary bug (Coin Change 2 on 2026-07-25 also had one) — recurring pattern, not a one-off.
+- **Fix:** When a table needs indices `0..n` inclusive, allocate `n+1` slots. When a fill loop needs to cover index `n`, the condition must be `i <= n` (i.e. `i < n+1`), not `i < n` or `i < n-1`. General habit: after writing array size / loop bound, explicitly check "what's the highest index I read after this loop, and does my size/condition actually reach it?"
+- **Box:** 1 · **Next review:** 2026-07-28
+- **Note:** self-corrected both bugs via guided tracing (no answer handed over), and asked a sharp follow-up on why `dp[0]=1` rather than `0` — understood the "empty sequence still counts as one way" reasoning cleanly on first explanation.
+
 <!-- Add new entries below in the same format as you find new gaps. -->
