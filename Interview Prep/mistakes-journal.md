@@ -32,4 +32,16 @@ Boxes: **1** = review next day · **2** = review in 3 days · **3** = review in 
 - **Box:** 1 · **Next review:** 2026-07-30
 - **Note:** self-reasoned to the fix via hand-tracing a concrete counterexample rather than being told the bug existed — good instinct once prompted to trace by hand. Implementation of the fix itself was pending when the session ended; verify it's actually applied and both test cases pass on the next review.
 
+### bfs-visited-mark-timing
+- **What happened (2026-07-31, BFS by hand):** Wrote BFS pseudocode with a queue and visited set, but never marked the *start* node visited, and pushed neighbors unconditionally without checking if they were already visited first.
+- **Fix:** mark a node visited at the moment it's pushed onto the queue (not when it's dequeued/processed) - for the start node at initialization, and for every neighbor gated behind an `if not visited` check before the push. Otherwise: (a) the start node can be re-pushed by a neighbor looking back at it -> infinite loop on any cycle (traced `a-b` undirected by hand), and (b) nodes with multiple parents get enqueued more than once even without a cycle.
+- **Box:** 1 · **Next review:** 2026-08-01
+- **Note:** self-corrected via a hand-traced counterexample (a-b undirected graph), not told the bug directly. Still owes translating this pseudocode into actual Java syntax - ran out of runway same-day before the interview.
+
+### graph-cycle-detection-directed-vs-undirected
+- **What happened (2026-07-30 introduced, 2026-07-31 drilled):** Asked why the undirected "skip the parent" cycle-detection trick doesn't work for directed graphs. Took three attempts: first answer garbled, second only explained why parent-skip isn't *needed* without saying what replaces it, third wrongly proposed a plain visited-set (which false-positives on cross edges, e.g. `a->b, a->c, b->d, c->d` - `d` reached twice with no cycle).
+- **Fix:** track two sets - `visited`/black (fully done exploring) and `inStack`/`onPath`/gray (currently on the current DFS call stack). A cycle exists iff you reach a node that is currently `inStack`, not just `visited`. Remove from `inStack` (keep in `visited`) when returning from a node's recursive calls.
+- **Box:** 1 · **Next review:** 2026-08-01
+- **Note:** recited cleanly on the final attempt same night/morning before the interview ("cycle = hitting a node that's inStack, not just visited, because of cross edges") - needs at least one more clean cold-recall pass before trusting it's automatic.
+
 <!-- Add new entries below in the same format as you find new gaps. -->
